@@ -10,9 +10,9 @@ namespace ProjectManagerInfrastructure
         IdentityUserClaim<int>, ProjectUserRole, IdentityUserLogin<int>,
         IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        DbSet<ProjectModel> Projects { get; set; }
-        DbSet<TaskModel> Tasks { get; set; }
-        DbSet<WorkTimeModel> WorkTimes { get; set; }
+        public DbSet<ProjectModel> Projects { get; set; }
+        public DbSet<TaskModel> Tasks { get; set; }
+        public DbSet<WorkTimeModel> WorkTimes { get; set; }
 
         public PMDbContext(DbContextOptions<PMDbContext> options) :
             base(options)
