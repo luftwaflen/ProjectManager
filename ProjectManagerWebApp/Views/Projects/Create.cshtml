@@ -1,0 +1,19 @@
+﻿@model ProjectViewModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4>Create project</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div>
+    <div class="modal-body">
+        <form asp-action="Create" asp-controller="Projects" method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label for="createName" class="form-label">Project name</label>
+                <input type="text" class="form-control" id="createName" asp-for="Name">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn-primary" value="Create"/>
+            </div>
+        </form>
+    </div>
+</div>

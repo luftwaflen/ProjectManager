@@ -1,0 +1,17 @@
+﻿@model UserViewModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4>Change "@Html.DisplayFor(model => model.Name)" role</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div>
+    <div class="modal-body">
+        <form asp-action="Edit" asp-controller="Projects" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="editRole" class="form-label">Role</label>
+                <input type="text" value="@Model.Name" class="form-control" id="editRole" asp-for="Role">
+            </div>
+            <input type="submit" class="btn-primary" value="Change role"/>
+        </form>
+    </div>
+</div>

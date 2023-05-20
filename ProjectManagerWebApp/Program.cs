@@ -1,3 +1,8 @@
+using ProjectManagerCore.Managers;
+using ProjectManagerCore.Models;
+using ProjectManagerDependencies;
+using ProjectManagerInfrastructure;
+
 namespace ProjectManagerWebApp
 {
     public class Program
@@ -6,6 +11,15 @@ namespace ProjectManagerWebApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var connection = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddRepositories(connection);
+
+            builder.Services.AddIdentity<UserModel, RoleModel>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<PMDbContext>()
+                .AddUserManager<CustomUserManager>();
+            
+            builder.Services.AddServices();
+            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -26,9 +40,13 @@ namespace ProjectManagerWebApp
 
             app.UseAuthorization();
 
+            // app.MapControllerRoute(
+            //     name: "default",
+            //     pattern: "{controller=Projects}/{action=Index}/{id?}");
+            
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }
