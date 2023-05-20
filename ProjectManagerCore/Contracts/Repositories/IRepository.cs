@@ -5,7 +5,7 @@
         public IEnumerable<T> GetAll();
         public Task<IEnumerable<T>> GetAllAsync();
         public T GetById(int id);
-        public Task<T> GetAllAsync(int id);
+        public Task<T> GetByIdAsync(int id);
         public void Add(T model);
         public Task AddAsync(T model);
         public void Update(T model);
