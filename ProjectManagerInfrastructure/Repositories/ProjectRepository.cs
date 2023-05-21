@@ -1,4 +1,5 @@
-﻿using ProjectManagerCore.Contracts.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectManagerCore.Contracts.Repositories;
 using ProjectManagerCore.Models;
 
 namespace ProjectManagerInfrastructure.Repositories
@@ -14,7 +15,7 @@ namespace ProjectManagerInfrastructure.Repositories
 
         public IEnumerable<ProjectModel> GetAll()
         {
-            var projects = _db.Projects.ToList();
+            var projects = _db.Projects.Include(a => a.Users).ToList();
             return projects;
         }
 

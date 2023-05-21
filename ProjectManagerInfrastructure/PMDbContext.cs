@@ -25,8 +25,7 @@ namespace ProjectManagerInfrastructure
 
             modelBuilder.Entity<WorkTimeModel>()
                 .HasOne(t => t.Task)
-                .WithOne(t => t.WorkTime)
-                .HasForeignKey<WorkTimeModel>("TaskId");
+                .WithMany(t => t.WorkTimes);
 
             modelBuilder.Entity<WorkTimeModel>()
                 .HasOne(w => w.User)
@@ -39,6 +38,10 @@ namespace ProjectManagerInfrastructure
             modelBuilder.Entity<TaskModel>()
                 .HasOne(u => u.Executor)
                 .WithMany(u => u.ExecutedTasks);
+
+            modelBuilder.Entity<TaskModel>()
+                .HasOne(p => p.Project)
+                .WithMany(p => p.Tasks);
 
             modelBuilder
                 .Entity<ProjectModel>()
