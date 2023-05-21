@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjectManagerWebApp.Models;
 
 namespace ProjectManagerWebApp.Controllers;
 
+[Authorize]
 public class BoardController : Controller
 {
     private readonly int _projectId;

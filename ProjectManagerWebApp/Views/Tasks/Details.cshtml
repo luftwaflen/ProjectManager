@@ -1,0 +1,21 @@
+﻿@model TaskViewModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4>Edit "@Html.DisplayFor(model => model.Name)"</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="detailsName" class="form-label">Name</label>
+                <input type="text" value="@Model.Name" class="form-control disabled" id="detailsName">
+            </div>
+            <div class="form-group mb-3">
+                <label for="detailsDescription" class="form-label">Description</label>
+                <textarea type="text" class="form-control disabled" id="detailsDescription">@Model.Description</textarea>
+            </div>
+            <input type="submit" class="btn-secondary" data-bs-dismiss="modal" value="Close"/>
+        </form>
+    </div>
+</div>

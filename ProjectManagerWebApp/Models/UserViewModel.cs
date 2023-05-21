@@ -1,4 +1,6 @@
-﻿namespace ProjectManagerWebApp.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProjectManagerWebApp.Models;
 
 public class UserViewModel
 {

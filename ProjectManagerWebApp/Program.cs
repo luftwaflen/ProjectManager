@@ -1,7 +1,8 @@
-using ProjectManagerCore.Managers;
 using ProjectManagerCore.Models;
 using ProjectManagerDependencies;
 using ProjectManagerInfrastructure;
+using ProjectManagerInfrastructure.Managers;
+using ProjectManagerWebApp.Mappers;
 
 namespace ProjectManagerWebApp
 {
@@ -14,11 +15,23 @@ namespace ProjectManagerWebApp
             var connection = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddRepositories(connection);
 
-            builder.Services.AddIdentity<UserModel, RoleModel>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddIdentity<UserModel, RoleModel>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.SignIn.RequireConfirmedEmail = false;
+                })
+                
                 .AddEntityFrameworkStores<PMDbContext>()
                 .AddUserManager<CustomUserManager>();
             
             builder.Services.AddServices();
+            
+            builder.Services.AddAutoMapper(typeof(ProjectModelToView),
+                typeof(TaskModelToView), typeof(UserModelToView), typeof(WorkTimeModelToView));
             
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -38,6 +51,7 @@ namespace ProjectManagerWebApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // app.MapControllerRoute(

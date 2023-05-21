@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagerCore.Models;
 using ProjectManagerWebApp.Models;
 
 namespace ProjectManagerWebApp.Controllers;
 
+[Authorize]
 public class DevelopersController : Controller
 {
     private readonly UserManager<UserModel> _userManager;
