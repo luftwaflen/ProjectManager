@@ -14,6 +14,7 @@ namespace ProjectManagerCore.Models
         public TaskStatus Status { get; set; }
         public UserModel Appender { get; set; }
         public UserModel? Executor { get; set; }
-        public WorkTimeModel? WorkTime { get; set; }
+        public ProjectModel Project { get; set; }
+        public List<WorkTimeModel>? WorkTimes { get; set; }
     }
 }

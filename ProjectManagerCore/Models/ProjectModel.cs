@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public List<UserModel> Users { get; set; }
         public List<ProjectUserRole> ProjectUsers { get; set; }
+        public List<TaskModel> Tasks { get; set; }
     }
 }
