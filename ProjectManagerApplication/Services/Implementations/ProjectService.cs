@@ -1,7 +1,8 @@
-﻿using ProjectManagerApplication.Services.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using ProjectManagerApplication.Services.Interfaces;
 using ProjectManagerCore.Contracts.Repositories;
-using ProjectManagerCore.Managers;
 using ProjectManagerCore.Models;
+using ProjectManagerInfrastructure.Managers;
 
 namespace ProjectManagerApplication.Services.Implementations
 {
