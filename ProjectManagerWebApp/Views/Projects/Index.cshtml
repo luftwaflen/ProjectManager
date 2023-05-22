@@ -11,21 +11,17 @@
 
 <h2>Projects</h2>
 <div class="d-flex flex-column">
-    @foreach (var component in Model)
+    @foreach (var project in Model)
     {
-        @*style="width: 20rem;*@
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">@component.Name</h5>
-                @* <p class="card-text">@component.Description</p> *@
+                <h5 class="card-title">@project.Name</h5>
                 <div>
-                    @* <button type="button" class="btn btn-primary mr-3"> *@
-                    @*     @Html.ActionLink("Открыть", "Details", new {id = component.Id}, new {@class = "compDetails"}) *@
-                    @* </button> *@
+                    <a class="btn btn-primary mr-3" target="_blank" href="@Url.Action("Index", "Board", new { id = project.Id })">Open</a>
                     <button type="button" class="btn btn-primary mr-3">
-                        @Html.ActionLink("Edit", "Edit", new { id = component.Id }, new { @class = "projEdit" })
+                        @Html.ActionLink("Edit", "Edit", new { id = project.Id }, new { @class = "projEdit" })
                     </button>
-                    <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Projects", new { id = component.Id })">Delete</a>
+                    <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Projects", new { id = project.Id })">Delete</a>
                 </div>
             </div>
         </div>
@@ -45,14 +41,6 @@
 
         $(function () {
             $.ajaxSetup({ cache: false });
-            $(".projDetails").click(function (e) {
-
-                e.preventDefault();
-                $.get(this.href, function (data) {
-                    $('#dialogContent').html(data);
-                    $('#modDialog').modal('show');
-                });
-            });
             $(".projEdit").click(function (e) {
                 e.preventDefault();
                 $.get(this.href, function (data) {

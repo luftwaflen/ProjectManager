@@ -24,15 +24,20 @@ public class ProjectsController : Controller
         _userManager = userManager;
     }
 
-    public IActionResult Index()
+    private UserModel GetCurrentUser()
     {
         ClaimsPrincipal currentUser = this.User;
         var currentUserID = Int32.Parse(currentUser.FindFirst(ClaimTypes.NameIdentifier).Value);
         var user = _userManager.Users.First(u => u.Id == currentUserID);
 
-        //Ленивую подгрузка может пофиксить
-        var p = _projectService.GetAll();
-        var projects = _projectService.GetAll().Where(p => p.Users.Contains(user)).ToList();
+        return user;
+    }
+    
+    public IActionResult Index()
+    {
+        var user = GetCurrentUser();
+
+        var projects = _projectService.GetUserProjects(user.Id);
         var projectViews = new List<ProjectViewModel>();
         foreach (var project in projects)
         {
@@ -52,9 +57,7 @@ public class ProjectsController : Controller
     [HttpPost]
     public IActionResult Create(ProjectViewModel newProject)
     {
-        ClaimsPrincipal currentUser = this.User;
-        var currentUserID = Int32.Parse(currentUser.FindFirst(ClaimTypes.NameIdentifier).Value);
-        var user = _userManager.Users.First(u => u.Id == currentUserID);
+        var user = GetCurrentUser();
         
         var project = _mapper.Map<ProjectModel>(newProject);
         var PmRole = 2;
@@ -63,20 +66,28 @@ public class ProjectsController : Controller
     }
 
     [HttpGet]
-    public IActionResult Edit()
+    public IActionResult Edit(int id)
     {
-        return PartialView();
+        var project = _projectService.GetById(id);
+        var projectView = _mapper.Map<ProjectViewModel>(project);
+        return PartialView(projectView);
     }
 
     [HttpPost]
     public IActionResult Edit(ProjectViewModel project)
     {
+        var user = GetCurrentUser();
+
+        var projectModel = _mapper.Map<ProjectModel>(project);
+        _projectService.Update(projectModel);
+        
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
-    public IActionResult Delete()
+    //[HttpPost]
+    public IActionResult Delete(int id)
     {
+        _projectService.DeleteById(id);
         return RedirectToAction("Index");
     }
 }

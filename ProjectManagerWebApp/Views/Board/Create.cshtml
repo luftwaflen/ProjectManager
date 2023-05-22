@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     </div>
     <div class="modal-body">
-        <form asp-action="Create" asp-controller="Projects" method="post" enctype="multipart/form-data">
+        <form asp-action="Create" asp-controller="Board" method="post" enctype="multipart/form-data">
             <div class="form-group mb-3">
                 <label for="createName" class="form-label">Task name</label>
                 <input type="text" class="form-control" id="createName" asp-for="Name">
