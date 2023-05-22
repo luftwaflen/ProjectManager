@@ -80,19 +80,6 @@ namespace ProjectManagerApplication.Services.Implementations
             }
         }
 
-        public void UpdateById(int id)
-        {
-            try
-            {
-                var workTime = _repository.GetById(id);
-                _repository.Add(workTime);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
         public async Task UpdateAsync(WorkTimeModel model)
         {
             try

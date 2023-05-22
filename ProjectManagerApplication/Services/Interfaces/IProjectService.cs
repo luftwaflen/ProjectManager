@@ -6,7 +6,6 @@ namespace ProjectManagerApplication.Services.Interfaces
     {
         public IEnumerable<ProjectModel> GetUserProjects(int userId);
         public IEnumerable<TaskModel> GetProjectTasks(int projectId);
-        public void UpdateById(int id);
         public void DeleteById(int id);
     }
 }

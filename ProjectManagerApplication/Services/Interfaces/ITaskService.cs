@@ -6,7 +6,6 @@ namespace ProjectManagerApplication.Services.Interfaces
     {
         //Возможно стоит перенести в user'а
         public IEnumerable<TaskModel> GetUserTasks(int userId);
-        public void UpdateById(int id);
         public void DeleteById(int id);
     }
 }

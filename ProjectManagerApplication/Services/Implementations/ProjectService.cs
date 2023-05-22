@@ -87,19 +87,6 @@ namespace ProjectManagerApplication.Services.Implementations
             }
         }
 
-        public void UpdateById(int id)
-        {
-            try
-            {
-                var project = _projectRepository.GetById(id);
-                _projectRepository.Update(project);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
         public async Task UpdateAsync(ProjectModel model)
         {
             try
@@ -129,14 +116,14 @@ namespace ProjectManagerApplication.Services.Implementations
             try
             {
                 var project = _projectRepository.GetById(id);
-                _projectRepository.Delete(project);
+                _projectRepository.Add(project);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-
+        
         public async Task DeleteAsync(ProjectModel model)
         {
             try

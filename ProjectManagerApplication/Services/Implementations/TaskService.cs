@@ -80,19 +80,6 @@ namespace ProjectManagerApplication.Services.Implementations
             }
         }
 
-        public void UpdateById(int id)
-        {
-            try
-            {
-                var task = _repository.GetById(id);
-                _repository.Update(task);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
         public async Task UpdateAsync(TaskModel model)
         {
             try
@@ -116,13 +103,13 @@ namespace ProjectManagerApplication.Services.Implementations
                 throw new Exception(e.Message);
             }
         }
-
+        
         public void DeleteById(int id)
         {
             try
             {
                 var task = _repository.GetById(id);
-                _repository.Delete(task);
+                _repository.Add(task);
             }
             catch (Exception e)
             {
