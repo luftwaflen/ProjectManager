@@ -12,9 +12,9 @@ namespace ProjectManagerCore.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public TaskStatus Status { get; set; }
-        public UserModel Appender { get; set; }
-        public UserModel? Executor { get; set; }
-        public ProjectModel Project { get; set; }
-        public List<WorkTimeModel>? WorkTimes { get; set; }
+        public virtual UserModel Appender { get; set; }
+        public virtual UserModel? Executor { get; set; }
+        public virtual ProjectModel Project { get; set; }
+        public virtual List<WorkTimeModel>? WorkTimes { get; set; }
     }
 }

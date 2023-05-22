@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public TimeSpan Time { get; set; }
-        public UserModel User { get; set; }
-        public TaskModel Task { get; set; }
+        public virtual UserModel User { get; set; }
+        public virtual TaskModel Task { get; set; }
     }
 }

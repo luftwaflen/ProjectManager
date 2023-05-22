@@ -5,6 +5,6 @@ namespace ProjectManagerCore.Models
     public class ProjectUserRole : IdentityUserRole<int>
     {
         public int ProjectId { get; set; }
-        public ProjectModel? Project { get; set; }
+        public virtual ProjectModel? Project { get; set; }
     }
 }

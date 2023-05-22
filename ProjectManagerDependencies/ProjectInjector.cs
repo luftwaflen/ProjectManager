@@ -16,6 +16,7 @@ public static class ProjectInjector
         services.AddDbContext<PMDbContext>(options =>
         {
             options
+                .UseLazyLoadingProxies()
                 .UseSqlite(connection)
                 .LogTo(Console.WriteLine);
         });

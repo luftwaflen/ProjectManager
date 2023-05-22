@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<UserModel> Users { get; set; }
-        public List<ProjectUserRole> ProjectUsers { get; set; }
-        public List<TaskModel> Tasks { get; set; }
+        public virtual List<UserModel> Users { get; set; }
+        public virtual List<ProjectUserRole> ProjectUsers { get; set; }
+        public virtual List<TaskModel> Tasks { get; set; }
     }
 }

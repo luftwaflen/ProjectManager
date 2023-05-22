@@ -4,9 +4,9 @@ namespace ProjectManagerCore.Models
 {
     public class UserModel : IdentityUser<int>
     {
-        public List<ProjectModel> Projects { get; set; }
-        public List<TaskModel> AppendedTasks { get; set; }
-        public List<TaskModel> ExecutedTasks { get; set; }
-        public List<WorkTimeModel> WorkTimes { get; set; }
+        public virtual List<ProjectModel> Projects { get; set; }
+        public virtual List<TaskModel> AppendedTasks { get; set; }
+        public virtual List<TaskModel> ExecutedTasks { get; set; }
+        public virtual List<WorkTimeModel> WorkTimes { get; set; }
     }
 }
