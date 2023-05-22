@@ -15,7 +15,10 @@ namespace ProjectManagerInfrastructure.Repositories
 
         public IEnumerable<ProjectModel> GetAll()
         {
-            var projects = _db.Projects.Include(a => a.Users).ToList();
+            var projects = _db.Projects
+                .Include(p => p.Users)
+                .Include(p => p.Tasks)
+                .ToList();
             return projects;
         }
 

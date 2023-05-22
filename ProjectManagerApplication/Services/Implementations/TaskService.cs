@@ -28,6 +28,15 @@ namespace ProjectManagerApplication.Services.Implementations
             return userTasks;
         }
 
+        public IEnumerable<TaskModel> GetProjectTasks(int projectId)
+        {
+            var projectTasks = _repository
+                .GetAll()
+                .Where(p => p.Project.Id == projectId)
+                .ToList();
+            return projectTasks;
+        }
+
         public async Task<IEnumerable<TaskModel>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
@@ -103,13 +112,13 @@ namespace ProjectManagerApplication.Services.Implementations
                 throw new Exception(e.Message);
             }
         }
-        
+
         public void DeleteById(int id)
         {
             try
             {
                 var task = _repository.GetById(id);
-                _repository.Add(task);
+                _repository.Delete(task);
             }
             catch (Exception e)
             {

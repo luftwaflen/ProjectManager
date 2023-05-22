@@ -1,4 +1,5 @@
-﻿using ProjectManagerCore.Contracts.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectManagerCore.Contracts.Repositories;
 using ProjectManagerCore.Models;
 
 namespace ProjectManagerInfrastructure.Repositories

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\ProjectManagerCore\ProjectManagerCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.5" />
+  </ItemGroup>
+
 </Project>

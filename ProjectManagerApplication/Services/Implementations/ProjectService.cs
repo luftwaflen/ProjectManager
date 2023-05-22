@@ -41,13 +41,18 @@ namespace ProjectManagerApplication.Services.Implementations
 
         public IEnumerable<ProjectModel> GetUserProjects(int userId)
         {
-            var userProjects = _userManager.Users.First(u => u.Id == userId).Projects;
+            var user = _userManager.Users.First(u => u.Id == userId);
+            var userProjects = GetAll().Where(p => p.Users.Contains(user)).ToList();
+            //var userProjects = _userManager.Users.First(u => u.Id == userId).Projects;
             return userProjects;
         }
 
         public IEnumerable<TaskModel> GetProjectTasks(int projectId)
         {
-            throw new NotImplementedException();
+            var project = _projectRepository.GetById(projectId);
+            var tasks = project.Tasks;
+
+            return tasks;
         }
 
 
@@ -116,14 +121,14 @@ namespace ProjectManagerApplication.Services.Implementations
             try
             {
                 var project = _projectRepository.GetById(id);
-                _projectRepository.Add(project);
+                _projectRepository.Delete(project);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        
+
         public async Task DeleteAsync(ProjectModel model)
         {
             try
