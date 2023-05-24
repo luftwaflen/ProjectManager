@@ -6,22 +6,24 @@ namespace ProjectManagerApplication.Services.Implementations
 {
     public class TaskService : ITaskService
     {
-        private readonly ITaskRepository _repository;
+        private readonly ITaskRepository _taskRepository;
+        private readonly IWorkTimeRepository _workTimeRepository;
 
-        public TaskService(ITaskRepository repository)
+        public TaskService(ITaskRepository taskRepository, IWorkTimeRepository workTimeRepository)
         {
-            _repository = repository;
+            _taskRepository = taskRepository;
+            _workTimeRepository = workTimeRepository;
         }
 
         public IEnumerable<TaskModel> GetAll()
         {
-            var tasks = _repository.GetAll();
+            var tasks = _taskRepository.GetAll();
             return tasks;
         }
 
         public IEnumerable<TaskModel> GetUserTasks(int userId)
         {
-            var userTasks = _repository
+            var userTasks = _taskRepository
                 .GetAll()
                 .Where(p => p.Appender.Id == userId || p.Executor.Id == userId)
                 .ToList();
@@ -30,7 +32,7 @@ namespace ProjectManagerApplication.Services.Implementations
 
         public IEnumerable<TaskModel> GetProjectTasks(int projectId)
         {
-            var projectTasks = _repository
+            var projectTasks = _taskRepository
                 .GetAll()
                 .Where(p => p.Project.Id == projectId)
                 .ToList();
@@ -39,25 +41,25 @@ namespace ProjectManagerApplication.Services.Implementations
 
         public async Task<IEnumerable<TaskModel>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return await _taskRepository.GetAllAsync();
         }
 
         public TaskModel GetById(int id)
         {
-            var task = _repository.GetById(id);
+            var task = _taskRepository.GetById(id);
             return task;
         }
 
         public async Task<TaskModel> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            return await _taskRepository.GetByIdAsync(id);
         }
 
         public void Add(TaskModel model)
         {
             try
             {
-                _repository.Add(model);
+                _taskRepository.Add(model);
             }
             catch (Exception e)
             {
@@ -69,7 +71,7 @@ namespace ProjectManagerApplication.Services.Implementations
         {
             try
             {
-                await _repository.AddAsync(model);
+                await _taskRepository.AddAsync(model);
             }
             catch (Exception e)
             {
@@ -77,11 +79,28 @@ namespace ProjectManagerApplication.Services.Implementations
             }
         }
 
+        public void SetExecutor(UserModel user, int taskId)
+        {
+            var task = _taskRepository.GetById(taskId);
+            task.Executor = user;
+            var time = new TimeSpan(0, 0, 0, 0);
+            var workTime = new WorkTimeModel
+            {
+                Task = task,
+                User = user,
+                Time = time,
+
+            };
+            _workTimeRepository.Add(workTime);
+            task.WorkTimes.Add(workTime);
+            _taskRepository.Update(task);
+        }
+        
         public void Update(TaskModel model)
         {
             try
             {
-                _repository.Update(model);
+                _taskRepository.Update(model);
             }
             catch (Exception e)
             {
@@ -93,7 +112,7 @@ namespace ProjectManagerApplication.Services.Implementations
         {
             try
             {
-                await _repository.UpdateAsync(model);
+                await _taskRepository.UpdateAsync(model);
             }
             catch (Exception e)
             {
@@ -105,7 +124,7 @@ namespace ProjectManagerApplication.Services.Implementations
         {
             try
             {
-                _repository.Delete(model);
+                _taskRepository.Delete(model);
             }
             catch (Exception e)
             {
@@ -117,8 +136,8 @@ namespace ProjectManagerApplication.Services.Implementations
         {
             try
             {
-                var task = _repository.GetById(id);
-                _repository.Delete(task);
+                var task = _taskRepository.GetById(id);
+                _taskRepository.Delete(task);
             }
             catch (Exception e)
             {
@@ -130,7 +149,7 @@ namespace ProjectManagerApplication.Services.Implementations
         {
             try
             {
-                await _repository.DeleteAsync(model);
+                await _taskRepository.DeleteAsync(model);
             }
             catch (Exception e)
             {

@@ -44,6 +44,15 @@ namespace ProjectManagerApplication.Services.Implementations
             return await _repository.GetByIdAsync(id);
         }
 
+        public WorkTimeModel GetTaskWorkTime(UserModel user, TaskModel task)
+        {
+            var workTime = _repository
+                .GetAll()
+                .First(wt => wt.User.Id == user.Id && wt.Task.Id == task.Id);
+
+            return workTime;
+        }
+
         public void Add(WorkTimeModel model)
         {
             try
@@ -60,7 +69,7 @@ namespace ProjectManagerApplication.Services.Implementations
         {
             try
             {
-                 await _repository.AddAsync(model);
+                await _repository.AddAsync(model);
             }
             catch (Exception e)
             {

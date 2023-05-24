@@ -1,21 +1,21 @@
-﻿@model TaskViewModel
+﻿@model WorkTimeViewModel
 
 <div class="modal-content">
     <div class="modal-header">
-        <h4>Edit "@Html.DisplayFor(model => model.Name)"</h4>
+        <h4>Track time for "@Html.DisplayFor(model => model.Task.Name)"</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     </div>
     <div class="modal-body">
         <form asp-action="Edit" asp-controller="Tasks" method="post" enctype="multipart/form-data">
             <div class="mb-3">
-                <label for="editName" class="form-label">Name</label>
-                <input type="text" value="@Model.Name" class="form-control" id="editName" asp-for="Name">
+                <label for="editHours" class="form-label">Hours</label>
+                <input type="text" value="@Model.Hours" class="form-control" id="editHours" asp-for="Hours">
             </div>
             <div class="form-group mb-3">
-                <label for="editDescription" class="form-label">Description</label>
-                <textarea type="text" class="form-control" id="editDescription" asp-for="Description">@Model.Description</textarea>
+                <label for="editMinutes" class="form-label">Minutes</label>
+                <input type="text" value="@Model.Minutes" class="form-control" id="editMinutes" asp-for="Minutes">
             </div>
-            <input type="submit" class="btn-primary" value="Save"/>
+            <input type="submit" class="btn-primary" value="Track"/>
         </form>
     </div>
 </div>

@@ -1,4 +1,9 @@
-﻿@model TaskViewModel
+﻿@using ProjectManagerCore.Models
+@model TaskViewModel
+
+@{
+    var users = (List<UserModel>)ViewData["Users"];
+}
 
 <div class="modal-content">
     <div class="modal-header">
@@ -6,7 +11,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     </div>
     <div class="modal-body">
-        <form asp-action="Edit" asp-controller="Projects" method="post" enctype="multipart/form-data">
+        <form asp-action="Edit" asp-controller="Board" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="editRole" class="form-label">Name</label>
                 <input type="text" value="@Model.Name" class="form-control" id="editRole" asp-for="Name">
@@ -14,6 +19,16 @@
             <div class="form-group mb-3">
                 <label for="createDescription" class="form-label">Description</label>
                 <textarea type="text" class="form-control" id="createDescription" asp-for="Description">@Model.Description</textarea>
+            </div>
+            <label for="dropdownList">Set executor</label>
+            <div class="form-group mb-3">
+                <select asp-for="ExecutorId" class="form-control" id="dropdownList">
+                    @* <option value="">-- Выберите --</option> *@
+                    @foreach (var user in users)
+                    {
+                        <option value="@user.Id">@user.UserName</option>
+                    }
+                </select>
             </div>
             <input type="submit" class="btn-primary" value="Change role"/>
         </form>

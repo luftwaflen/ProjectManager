@@ -37,6 +37,10 @@ public class ProjectsController : Controller
     {
         var user = GetCurrentUser();
 
+        ViewData["User"] = user;
+        ViewData["UserManager"] = _userManager;
+        ViewData["ProjectService"] = _projectService;
+
         var projects = _projectService.GetUserProjects(user.Id);
         var projectViews = new List<ProjectViewModel>();
         foreach (var project in projects)

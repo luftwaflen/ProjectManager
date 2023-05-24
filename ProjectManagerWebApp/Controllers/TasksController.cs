@@ -15,12 +15,15 @@ public class TasksController : Controller
     private readonly IMapper _mapper;
     private readonly ITaskService _taskService;
     private readonly CustomUserManager _userManager;
+    private readonly IWorkTimeService _workTimeService;
 
-    public TasksController(IMapper mapper, ITaskService taskService, CustomUserManager userManager)
+    public TasksController(IMapper mapper, ITaskService taskService, CustomUserManager userManager,
+        IWorkTimeService workTimeService)
     {
         _mapper = mapper;
         _taskService = taskService;
         _userManager = userManager;
+        _workTimeService = workTimeService;
     }
 
     private UserModel GetCurrentUser()
@@ -55,23 +58,30 @@ public class TasksController : Controller
 
         return PartialView(taskView);
     }
-    
+
     [HttpGet]
     public IActionResult Edit(int id)
     {
+        var user = GetCurrentUser();
         var task = _taskService.GetById(id);
-        var taskView = _mapper.Map<TaskViewModel>(task);
+        var workTime = _workTimeService.GetTaskWorkTime(user, task);
+        var wkView = _mapper.Map<WorkTimeViewModel>(workTime);
 
-        return PartialView(taskView);
+        return PartialView(wkView);
     }
 
     [HttpPost]
-    public IActionResult Edit(TaskViewModel task)
+    public IActionResult Edit(WorkTimeViewModel workTimeView)
     {
         var user = GetCurrentUser();
+        var task = _taskService.GetById(workTimeView.Task.Id);
 
-        var taskModel = _mapper.Map<TaskModel>(task);
-        _taskService.Update(taskModel);
+        var workTime = _workTimeService.GetTaskWorkTime(user, task);
+        var newHours = workTime.Time.Hours + workTimeView.Hours;
+        var newMinutes = workTime.Time.Minutes + workTimeView.Minutes;
+        var newTime = new TimeSpan(0,newHours,newMinutes,0);
+        workTime.Time = newTime;
+        _workTimeService.Update(workTime);
 
         return RedirectToAction("Index");
     }

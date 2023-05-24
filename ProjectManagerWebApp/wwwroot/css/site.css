@@ -33,3 +33,7 @@ A:visited {
 A:active {
     color: snow; /* Цвет активных ссылок */
 }
+
+.field-validation-error {
+    color: #b94a48;
+}

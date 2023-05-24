@@ -1,8 +1,14 @@
-﻿@model IEnumerable<TaskViewModel>
+﻿@using ProjectManagerApplication.Services.Interfaces
+@using ProjectManagerCore.Models
+@using ProjectManagerInfrastructure.Managers
+@model IEnumerable<TaskViewModel>
 
 @{
     ViewBag.Title = "Board";
     Layout = "_SecondLayout";
+    var user = (UserModel)ViewData["User"];
+    var userManager = (CustomUserManager)ViewData["UserManager"];
+    var taskService = (ITaskService)ViewData["TaskService"];
 }
 
 <div id="modDialog" class="modal fade">
@@ -19,12 +25,19 @@
                 <p class="card-text">@component.Description</p>
                 <div>
                     <button type="button" class="btn btn-primary mr-3">
-                        @Html.ActionLink("Open", "Details", new {id = component.Id}, new {@class = "taskDetails"})
+                        @Html.ActionLink("Open", "Details", new { id = component.Id }, new { @class = "taskDetails" })
                     </button>
-                    <button type="button" class="btn btn-primary mr-3">
-                        @Html.ActionLink("Edit", "Edit", new { id = component.Id }, new { @class = "taskEdit" })
-                    </button>
-                    <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Developers", new { id = component.Id })">Delete</a>
+                    @{
+                        var task = taskService.GetById(component.Id);
+                        bool isAppender = task.Appender == user;
+                    }
+                    @if (isAppender)
+                    {
+                        <button type="button" class="btn btn-primary mr-3">
+                            @Html.ActionLink("Edit", "Edit", new { id = component.Id }, new { @class = "taskEdit" })
+                        </button>
+                        <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Board", new { id = component.Id })">Delete</a>
+                    }
                 </div>
             </div>
         </div>

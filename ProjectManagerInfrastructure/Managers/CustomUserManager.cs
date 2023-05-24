@@ -27,6 +27,24 @@ public class CustomUserManager : UserManager<UserModel>
                  throw new InvalidOperationException();
     }
 
+    public int GetUserRole(UserModel user, ProjectModel projectModel)
+    {
+        var obj = _store.Context.UserRoles.First(o => o.UserId == user.Id && o.ProjectId == projectModel.Id);
+
+        return obj.RoleId;
+    }
+
+    public void ChangeProjectRole(UserModel user, ProjectModel project, int roleId)
+    {
+        _store.Context.UserRoles.Update(new ProjectUserRole
+        {
+            Project = project,
+            ProjectId = project.Id,
+            UserId = user.Id,
+            RoleId = roleId
+        });
+    }
+
     public void AddProjectRole(UserModel user, ProjectModel project, int roleId)
     {
         _store.Context.UserRoles.Add(new ProjectUserRole

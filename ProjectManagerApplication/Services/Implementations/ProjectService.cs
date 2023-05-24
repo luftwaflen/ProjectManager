@@ -55,6 +55,13 @@ namespace ProjectManagerApplication.Services.Implementations
             return tasks;
         }
 
+        public IEnumerable<UserModel> GetProjectUsers(int projectId)
+        {
+            var project = _projectRepository.GetById(projectId);
+            var users = project.Users;
+
+            return users;
+        }
 
         public void Add(ProjectModel model)
         {
@@ -78,6 +85,14 @@ namespace ProjectManagerApplication.Services.Implementations
             {
                 throw new Exception(e.Message);
             }
+        }
+
+        public void AddUserToProject(int projectId, UserModel user, int roleId)
+        {
+            var project = _projectRepository.GetById(projectId);
+            project.Users.Add(user);
+            _userManager.AddProjectRole(user, project, roleId);
+            _projectRepository.Update(project);
         }
 
         public void Update(ProjectModel model)

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Developers";
     Layout = "_SecondLayout";
+    var userRole = (int)ViewData["UserRole"];
 }
 
 <div id="modDialog" class="modal fade">
@@ -13,20 +14,17 @@
 <div class="d-flex flex-column">
     @foreach (var component in Model)
     {
-        @*style="width: 20rem;*@
         <div class="card mb-3">
-            <img src="" class="card-img-top" alt="Image">
             <div class="card-body">
-                <h5 class="card-title">@component.Name</h5>
-                @* <p class="card-text">@component.Description</p> *@
+                <h5 class="card-title">@component.UserName</h5>
                 <div>
-                    @* <button type="button" class="btn btn-primary mr-3"> *@
-                    @*     @Html.ActionLink("Открыть", "Details", new {id = component.Id}, new {@class = "devDetails"}) *@
-                    @* </button> *@
-                    <button type="button" class="btn btn-primary mr-3">
-                        @Html.ActionLink("Edit", "Edit", new { id = component.Id }, new { @class = "devEdit" })
-                    </button>
-                    <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Developers", new { id = component.Id })">Delete</a>
+                    @if (userRole == 2)
+                    {
+                        <button type="button" class="btn btn-primary mr-3">
+                            @Html.ActionLink("Edit", "Edit", new { id = component.Id }, new { @class = "devEdit" })
+                        </button>
+                        <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Developers", new { id = component.Id })">Delete</a>
+                    }
                 </div>
             </div>
         </div>

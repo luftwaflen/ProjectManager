@@ -4,14 +4,14 @@ namespace ProjectManagerWebApp.Models;
 
 public class LoginViewModel
 {
-    [Required(ErrorMessage = "No data")]
+    [Required(ErrorMessage = "No value for name")]
     public string Name { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "No value for email")]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "No value for password")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
 

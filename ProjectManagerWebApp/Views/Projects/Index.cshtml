@@ -1,8 +1,14 @@
-﻿@model IEnumerable<ProjectViewModel>
+﻿@using ProjectManagerCore.Models
+@using ProjectManagerInfrastructure.Managers
+@using ProjectManagerApplication.Services.Interfaces
+@model IEnumerable<ProjectViewModel>
 
 @{
     ViewBag.Title = "Project";
     Layout = "_Layout";
+    var user = (UserModel)ViewData["User"];
+    var userManager = (CustomUserManager)ViewData["UserManager"];
+    var projectService = (IProjectService)ViewData["ProjectService"];
 }
 
 <div id="modDialog" class="modal fade">
@@ -18,10 +24,17 @@
                 <h5 class="card-title">@project.Name</h5>
                 <div>
                     <a class="btn btn-primary mr-3" target="_blank" href="@Url.Action("Index", "Board", new { id = project.Id })">Open</a>
-                    <button type="button" class="btn btn-primary mr-3">
-                        @Html.ActionLink("Edit", "Edit", new { id = project.Id }, new { @class = "projEdit" })
-                    </button>
-                    <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Projects", new { id = project.Id })">Delete</a>
+                    @{
+                        var proj = projectService.GetById(project.Id);
+                        var role = userManager.GetUserRole(user, proj);
+                    }
+                    @if (role == 2)
+                    {
+                        <button type="button" class="btn btn-primary mr-3">
+                            @Html.ActionLink("Edit", "Edit", new { id = project.Id }, new { @class = "projEdit" })
+                        </button>
+                        <a class="btn btn-primary mr-3" href="@Url.Action("Delete", "Projects", new { id = project.Id })">Delete</a>
+                    }
                 </div>
             </div>
         </div>
